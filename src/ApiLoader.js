@@ -1,6 +1,6 @@
 /**
  * @Date:   2019-10-22T11:26:33+01:00
- * @Last modified time: 2019-10-22T16:00:17+01:00
+ * @Last modified time: 2019-10-22T20:22:24+01:00
  */
 
  import React from 'react';
@@ -40,10 +40,7 @@
 
 
 
-   fetch(`https://age-of-empires-2-api.herokuapp.com/api/v1/${apiEnd}`)
-   .then(res => res.json())
-   .then(data => {
-     
-     }
-   );
+   return fetch(`https://age-of-empires-2-api.herokuapp.com/api/v1/${apiEnd}`)
+   .then(res => res.json()).then((e) => result = e);
+
  };
