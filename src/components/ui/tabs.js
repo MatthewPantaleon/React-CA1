@@ -1,6 +1,6 @@
 /**
  * @Date:   2019-10-22T15:30:46+01:00
- * @Last modified time: 2019-10-23T16:28:35+01:00
+ * @Last modified time: 2019-10-23T18:02:49+01:00
  */
 
  import React, {Component} from 'react';
@@ -9,12 +9,15 @@
  import {BrowserRouter, Route, Link, Switch, Redirect} from 'react-router-dom';
  import $ from 'jquery';
 
+ 
  const tabStyle = {
   bootClasses:{
     tabClassReady: "col-3 btn btn-primary",
     tabClassSelected: "col-3 btn btn-secondary"
   }
  };
+
+
 
 
  class Tab extends Component{

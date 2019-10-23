@@ -1,6 +1,6 @@
 /**
  * @Date:   2019-10-22T18:41:31+01:00
- * @Last modified time: 2019-10-23T17:05:25+01:00
+ * @Last modified time: 2019-10-23T18:58:59+01:00
  */
 
 import React, {Component} from 'react';
@@ -15,7 +15,7 @@ import ApiLoader from '../../ApiLoader';
 
      this.state = {
        data: null,
-       selectedCiv: {civilization_bonus: []},
+       selectedCiv: {civilization_bonus: [], name: "Aztecs"},
        unique_unit: [],
        unique_tech: [],
        team_bonus: ""
@@ -34,7 +34,7 @@ import ApiLoader from '../../ApiLoader';
             unique_tech: ApiLoader(this.state.selectedCiv.unique_tech),
             unique_unit: ApiLoader(this.state.selectedCiv.unique_unit),
             team_bonus: this.state.selectedCiv.team_bonus
-          }, function(){localStorage.setItem("d", JSON.stringify(this.state))});
+          }, () => {localStorage.setItem("d", JSON.stringify(this.state))});
         }
       ));
     }else{
@@ -59,37 +59,52 @@ import ApiLoader from '../../ApiLoader';
      }
 
      return(
-       <>
-       <select className="form-control" onChange={(e) => this.changeValue(e)}>
-       {this.state.data.civilizations.map((e, i) => <option value={i} key={e.id}>{e.name}</option>)}
-       </select>
+      <>
 
-       <hr />
 
-<      h6>Civilization Bonuses:</h6>
-       <ul>
-       {this.state.selectedCiv.civilization_bonus.map((e, i) => <li key={i}>{e}</li>)}
-       </ul>
+      <select className="form-control" onChange={(e) => this.changeValue(e)}>
+      {this.state.data.civilizations.map((e, i) => <option value={i} key={e.id}>{e.name}</option>)}
+      </select>
 
-       <hr />
+      <hr />
 
-       <h6>Unique Tech:</h6>
-       <ul>
-       {this.state.unique_tech.map((e, i) => <li key={i}>{e.name}: {e.description}</li>)}
-       </ul>
+      <h5 className="mb-4">{this.state.selectedCiv.army_type} Civilization</h5>
 
-       <h6>Unique Unit:</h6>
-       <ul>
-       {this.state.unique_unit.map((e, i) => <li key={i}>{e.name}</li>)}
-       </ul>
+      <div className="mb-4">
+        <div className="row">
+          <div className="col-sm-12 col-md-10 col-lg-6">
+              <figure className="figure">
+              <img src={require(`../../images/civ/${this.state.selectedCiv.name}.png`)} className="img-fluid" alt={`${this.state.selectedCiv.name} Wonder`}/>
+              <figcaption><small>{`${this.state.selectedCiv.name} Wonder`}</small></figcaption>
+              </figure>
+          </div>
+        </div>
+      </div>
 
-       <hr />
-       <h6>Team Bonus:</h6>
-       <ul>
-          <li>{this.state.team_bonus}</li>
-       </ul>
+      <h5>Civilization Bonuses:</h5>
 
-       </>
+      <ul>
+      {this.state.selectedCiv.civilization_bonus.map((e, i) => <li key={i}>{e}</li>)}
+      </ul>
+
+      <hr />
+
+      <h5>Unique Tech:</h5>
+      <ul>
+      {this.state.unique_tech.map((e, i) => <li key={i}><b>{e.name}:</b> {e.description}</li>)}
+      </ul>
+
+      <h5>Unique Unit:</h5>
+      <ul>
+      {this.state.unique_unit.map((e, i) => <li key={i}><b>{e.name}:</b> {e.description}</li>)}
+      </ul>
+
+      <hr />
+      <h5>Team Bonus:</h5>
+      <ul>
+      <li>{this.state.team_bonus}</li>
+      </ul>
+      </>
      );
    }
  }

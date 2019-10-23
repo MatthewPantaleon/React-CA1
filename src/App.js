@@ -1,6 +1,6 @@
 /**
  * @Date:   2019-10-15T15:11:22+01:00
- * @Last modified time: 2019-10-22T18:51:21+01:00
+ * @Last modified time: 2019-10-23T17:37:22+01:00
  */
 
 
@@ -11,10 +11,6 @@ import {BrowserRouter, Route, Link, Switch, Redirect} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CivComponent from './components/civ/CivComponent';
 import Tab from './components/ui/tabs';
-
-
-
-
 
 //Main Top level component
 class App extends Component{
