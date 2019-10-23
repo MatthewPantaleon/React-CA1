@@ -1,6 +1,6 @@
 /**
  * @Date:   2019-10-22T18:41:31+01:00
- * @Last modified time: 2019-10-23T18:58:59+01:00
+ * @Last modified time: 2019-10-23T19:24:54+01:00
  */
 
 import React, {Component} from 'react';
@@ -91,12 +91,12 @@ import ApiLoader from '../../ApiLoader';
 
       <h5>Unique Tech:</h5>
       <ul>
-      {this.state.unique_tech.map((e, i) => <li key={i}><b>{e.name}:</b> {e.description}</li>)}
+      {this.state.unique_tech.map((e, i) => <li className="mb-2" key={i}><img  className="mr-2" src={require(`../../images/civ/Unique-tech.jpg`)}/><b>{e.name}:</b> {e.description}</li>)}
       </ul>
 
       <h5>Unique Unit:</h5>
       <ul>
-      {this.state.unique_unit.map((e, i) => <li key={i}><b>{e.name}:</b> {e.description}</li>)}
+      {this.state.unique_unit.map((e, i) => <li className="mb-2" key={i}><img className="mr-2" src={require(`../../images/civ/unique_units/${e.name}.jpg`)}/><b>{e.name}:</b> {e.description}</li>)}
       </ul>
 
       <hr />
