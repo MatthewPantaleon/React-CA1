@@ -1,6 +1,6 @@
 /**
  * @Date:   2019-10-22T15:30:46+01:00
- * @Last modified time: 2019-10-22T17:45:34+01:00
+ * @Last modified time: 2019-10-23T16:28:35+01:00
  */
 
  import React, {Component} from 'react';
@@ -56,6 +56,7 @@
               </div>
             </div>
 
+            {/* Where each component routed to will render */}
             <div className="card-body">
               {this.props.list.map((e, i) => <Route key={e.name} exact path={e.path} component={e.comp}/>)}
             </div>

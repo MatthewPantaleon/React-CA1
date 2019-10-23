@@ -1,6 +1,6 @@
 /**
  * @Date:   2019-10-22T11:26:33+01:00
- * @Last modified time: 2019-10-23T15:59:31+01:00
+ * @Last modified time: 2019-10-23T16:14:09+01:00
  */
 
 import React from 'react';
@@ -9,7 +9,7 @@ import $ from 'jquery';
 
 
  export default function ApiLoader(type, id){
-   console.log("EXORTED");
+   // console.log("EXORTED");
 
    let apiEnd = "";
    let results = [];
@@ -50,7 +50,7 @@ import $ from 'jquery';
        async: false
      }).responseText);
    }else if(Array.isArray(type) && id === undefined && typeof type !== "string"){
-     
+
      for(let i = 0; i < type.length; i++){
        $.ajax({
          type: "GET",
@@ -62,7 +62,7 @@ import $ from 'jquery';
          }
        });
      }
-     console.log(results);
+     // console.log(results);
      return results;
    }
 
