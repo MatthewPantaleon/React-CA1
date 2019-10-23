@@ -1,6 +1,6 @@
 /**
  * @Date:   2019-10-15T15:11:22+01:00
- * @Last modified time: 2019-10-23T19:06:05+01:00
+ * @Last modified time: 2019-10-23T19:27:01+01:00
  */
 
 
@@ -22,7 +22,7 @@ class App extends Component{
     ]
 
     return (
-      <div className="container">
+      <div className="container mt-4">
         <div className="card">
           <Tab list={tabs} />
         </div>
