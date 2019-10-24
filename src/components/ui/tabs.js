@@ -1,6 +1,6 @@
 /**
  * @Date:   2019-10-22T15:30:46+01:00
- * @Last modified time: 2019-10-23T19:29:10+01:00
+ * @Last modified time: 2019-10-24T16:43:09+01:00
  */
 
  import React, {Component} from 'react';
@@ -12,8 +12,8 @@
 
  const tabStyle = {
   bootClasses:{
-    tabClassReady: "col-lg-2 col-md-4 col=sm-12 btn btn-primary",
-    tabClassSelected: "col-lg-2 col-md-4 col=sm-12 btn btn-secondary"
+    tabClassReady: "col-lg-2 col-md-4 col=sm-12 btn btn-primary mr-1 mb-1",
+    tabClassSelected: "col-lg-2 col-md-4 col=sm-12 btn btn-secondary mr-1 mb-1"
   }
  };
 
@@ -61,7 +61,7 @@
 
             {/* Where each component routed to will render */}
             <div className="card-body">
-              {this.props.list.map((e, i) => <Route key={e.name} exact path={e.path} component={e.comp}/>)}
+              {this.props.list.map((e, i) => <Route key={i} exact path={e.path} component={e.comp}/>)}
             </div>
 
            </div>

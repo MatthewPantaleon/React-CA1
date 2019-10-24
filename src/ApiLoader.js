@@ -1,6 +1,6 @@
 /**
  * @Date:   2019-10-22T11:26:33+01:00
- * @Last modified time: 2019-10-23T19:02:44+01:00
+ * @Last modified time: 2019-10-24T19:28:57+01:00
  */
 
 import React from 'react';
@@ -34,10 +34,10 @@ import $ from 'jquery';
      apiEnd = `structure/${id}`;
    }else if(type === "tech" && id === undefined && typeof type === "string"){//get all techs
      console.log("Get all techs");
-     apiEnd = `techs`;
+     apiEnd = `technologies`;
    }else if(type === "tech" && typeof id === "number" && typeof type === "string"){//get tech with id
      console.log("Get tech with id");
-     apiEnd = `tech/${id}`;
+     apiEnd = `technology/${id}`;
 
    }else if(type === undefined){
      throw "Mssing type Parameter for API call. String or Array for first argument and optional id";

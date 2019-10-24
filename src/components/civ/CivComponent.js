@@ -1,12 +1,14 @@
 /**
  * @Date:   2019-10-22T18:41:31+01:00
- * @Last modified time: 2019-10-23T19:24:54+01:00
+ * @Last modified time: 2019-10-24T19:28:11+01:00
  */
 
 import React, {Component} from 'react';
 import * as ReactCSS from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ApiLoader from '../../ApiLoader';
+
+ApiLoader("tech");
 
  class CivComponent extends Component{
 
@@ -26,6 +28,8 @@ import ApiLoader from '../../ApiLoader';
 
    componentDidMount(){
 
+
+
      if(!localStorage.getItem("d")){
        this.setState({data: ApiLoader("civ")}, () =>
         this.setState({selectedCiv: this.state.data.civilizations[0]}, () => {
@@ -44,13 +48,13 @@ import ApiLoader from '../../ApiLoader';
    }
 
    changeValue(e){
-     this.setState({selectedCiv: this.state.data.civilizations[parseInt(e.target.value)]}, () =>{
-       this.setState({
-         unique_tech: ApiLoader(this.state.selectedCiv.unique_tech),
-         unique_unit: ApiLoader(this.state.selectedCiv.unique_unit),
-         team_bonus: this.state.selectedCiv.team_bonus
+       this.setState({selectedCiv: this.state.data.civilizations[parseInt(e.target.value)]}, () =>{
+         this.setState({
+           unique_tech: ApiLoader(this.state.selectedCiv.unique_tech),
+           unique_unit: ApiLoader(this.state.selectedCiv.unique_unit),
+           team_bonus: this.state.selectedCiv.team_bonus
+         });
        });
-     });
    }
 
    render(){
@@ -61,10 +65,13 @@ import ApiLoader from '../../ApiLoader';
      return(
       <>
 
-
-      <select className="form-control" onChange={(e) => this.changeValue(e)}>
-      {this.state.data.civilizations.map((e, i) => <option value={i} key={e.id}>{e.name}</option>)}
-      </select>
+      <div className="row">
+        <div className="col-lg-6 col-md-9 col-sm-12">
+          <select className="form-control" onChange={(e) => this.changeValue(e)}>
+          {this.state.data.civilizations.map((e, i) => <option value={i} key={e.id}>{e.name}</option>)}
+          </select>
+          </div>
+      </div>
 
       <hr />
 
