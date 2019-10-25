@@ -1,6 +1,6 @@
 /**
  * @Date:   2019-10-24T16:34:54+01:00
- * @Last modified time: 2019-10-25T18:22:33+01:00
+ * @Last modified time: 2019-10-25T18:34:19+01:00
  */
 
  import React, {Component} from 'react';
@@ -17,7 +17,7 @@
   Stable: Hussar, Paladin, Heavy Camel
   Dock: Fast Fire Ship, Elite Cannon Galleon, Galleon
 
-  blacksmith:
+  blacksmith: //NOt implemented
     archer armor: {padde archer(1/1), leather archer armor(1/1), ring archer armor(1/2))
     archer attack: {fletching(1), bodkin arrow(1), bracer(1), gunpowerder(1)}
     inf and cav attack: {forging(1), ironcasting(1), blast furnace(2)}
@@ -91,12 +91,12 @@ function getUnits(arrayOfNames){
      //get all imperial age units for the Barracks
      this.setState({Infantry: getUnits(infantryArray)});
 
-     //get all imperial archery range units *Imperial Skirmisher is Castle Age but Imperial Skirmisher does not exist in Age of Conquerors
+     //get all imperial archery range units *Elite Skirmisher is Castle Age but Imperial Skirmisher does not exist in Age of Conquerors
      this.setState({Archers: getUnits(archerArray)}, () => {
        this.setState({selectedUnit: this.state.Archers[0]});
      });
 
-     //get all IMperial Cavalry units
+     //get all Imperial Cavalry units
      this.setState({Cavalry: getUnits(cavalryArray)});
 
      //get all imperial ships
@@ -113,18 +113,18 @@ function getUnits(arrayOfNames){
 
      // console.log(this.structs);
 
-     if(this.structs.includes(String(e.target.value))){//if the main select is chosen
+     if(this.structs.includes(String(e.target.value))){//if the unit type select is chosen
        unitType = e.target.value;
-       $('#unitSelect').prop('selectedIndex',0);//rset select of units dropdown
+       $('#unitSelect').prop('selectedIndex',0);//reset select of units dropdown
      }else{//if unit selection is chosen
        unitType = this.state.selectedOption;
-       unitIndex = this.state[this.state.selectedOption].findIndex((index) => index.name === e.target.value);
+       unitIndex = this.state[this.state.selectedOption].findIndex((ele) => ele.name === e.target.value);
      }
 
-     this.setState({selectedOption: unitType}, () => {
-       this.setState({selectedUnit: this.state[this.state.selectedOption][unitIndex]}, () => {
-         console.log(this.state.selectedUnit);
-         this.setState({totalCost: Object.values(this.state.selectedUnit.cost).reduce((a, b) => a + b)});
+     this.setState({selectedOption: unitType}, () => {//change unit type
+       this.setState({selectedUnit: this.state[this.state.selectedOption][unitIndex]}, () => {//change selected unit to reflect type and sub index
+         // console.log(this.state.selectedUnit);
+         this.setState({totalCost: Object.values(this.state.selectedUnit.cost).reduce((a, b) => a + b)});//add up total cost of a unit per change of unit
        });
      });
    }
@@ -145,7 +145,7 @@ function getUnits(arrayOfNames){
 
         <h5 className="text-center">{this.state.selectedUnit.name}</h5>
         <div className="row justify-content-center">
-          <img className="img-fluid mb-4" src={require(`../../images/units/${this.state.selectedUnit.name}.jpg`)}/>
+          <img className="img-fluid mb-4" src={require(`../../images/units/${this.state.selectedUnit.name}.jpg`)} alt={this.state.selectedUnit.name}/>
         </div>
 
         <h5>Description</h5>
@@ -186,27 +186,7 @@ function getUnits(arrayOfNames){
    }
  }
 
-class Cost extends Component{
-  constructor(props){
-    super(props);
-  }
-
-  converter(obj){//converst objects to an array of keys or values
-    let normalised = {};
-
-  }
-
-  render(){
-    return(
-      <>
-
-      </>
-    );
-  }
-
-}
-
-
+//display list components with various names and values
 class Details extends Component{
   constructor(props){
     super(props);
