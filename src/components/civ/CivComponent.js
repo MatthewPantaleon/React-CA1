@@ -1,6 +1,6 @@
 /**
  * @Date:   2019-10-22T18:41:31+01:00
- * @Last modified time: 2019-10-25T13:46:17+01:00
+ * @Last modified time: 2019-10-25T16:32:42+01:00
  */
 
 import React, {Component} from 'react';
@@ -27,9 +27,6 @@ ApiLoader("tech");
    }
 
    componentDidMount(){
-
-
-
      if(!localStorage.getItem("c")){
        this.setState({data: ApiLoader("civ")}, () =>
         this.setState({selectedCiv: this.state.data.civilizations[0]}, () => {
@@ -74,7 +71,7 @@ ApiLoader("tech");
       </div>
 
       <hr />
-
+      <h4 className="mb-2">{this.state.selectedCiv.name}</h4>
       <h5 className="mb-4">{this.state.selectedCiv.army_type} Civilization</h5>
 
       <div className="mb-4">

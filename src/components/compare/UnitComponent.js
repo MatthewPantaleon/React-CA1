@@ -1,12 +1,13 @@
 /**
  * @Date:   2019-10-24T16:34:54+01:00
- * @Last modified time: 2019-10-25T15:45:57+01:00
+ * @Last modified time: 2019-10-25T17:37:25+01:00
  */
 
  import React, {Component} from 'react';
  import * as ReactCSS from 'react-bootstrap';
  import {BrowserRouter, Route, Link, Switch, Redirect} from 'react-router-dom';
  import 'bootstrap/dist/css/bootstrap.min.css';
+ import $ from 'jquery';
 
  import ApiLoader from '../../ApiLoader';
 
@@ -57,7 +58,7 @@ function getUnits(arrayOfNames){
        Cavalry: [],
        Ships: [],
        selectedOption: "Archers",
-       selectedUnit: {}
+       selectedUnit: {name: "Arbalest"}
      };
 
      this.structs = ["Archers", "Infantry", "Cavalry", "Ships"];
@@ -90,7 +91,9 @@ function getUnits(arrayOfNames){
      this.setState({Infantry: getUnits(infantryArray)});
 
      //get all imperial archery range units *Imperial Skirmisher is Castle Age but Imperial Skirmisher does not exist in Age of Conquerors
-     this.setState({Archers: getUnits(archerArray)});
+     this.setState({Archers: getUnits(archerArray)}, () => {
+       this.setState({selectedUnit: this.state.Archers[0]});
+     });
 
      //get all IMperial Cavalry units
      this.setState({Cavalry: getUnits(cavalryArray)});
@@ -101,28 +104,25 @@ function getUnits(arrayOfNames){
 
    //when type of units changes get the first unit from the list
    changeOptions(e){
-     console.log(e.target.value);
+     // console.log(e.target.value);
      let s = this.state; // substitution doesn't work?
 
      let unitType = "";
      let unitIndex = 0;
 
-     if(this.structs.includes(e.target.name)){
-       console.log("HUH?");
-       unitType = e.target.name;
-     }else{
+     // console.log(this.structs);
+
+     if(this.structs.includes(String(e.target.value))){//if the main select is chosen
+       unitType = e.target.value;
+       $('#unitSelect').prop('selectedIndex',0);//rset select of units dropdown
+     }else{//if unit selection is chosen
        unitType = this.state.selectedOption;
-       unitIndex = this.state[this.state.selectedOption].findIndex((name) => name);
+       unitIndex = this.state[this.state.selectedOption].findIndex((index) => index.name === e.target.value);
      }
 
      this.setState({selectedOption: unitType}, () => {
        this.setState({selectedUnit: this.state[this.state.selectedOption][unitIndex]}, () => console.log(this.state.selectedUnit));
      });
-   }
-
-   changeSubUnit(e){
-     console.log(e.target.value);
-    // this.setState({selectedUnit: this.state[this.state.selectedOption][this.state[this.state.selectedOption].findIndex(name => name)]}, () => console.log(this.state.selectedUnit));
    }
 
    render(){
@@ -133,22 +133,50 @@ function getUnits(arrayOfNames){
           {this.structs.map((e, i) => <option key={i} value={e}>{e}</option>)}
           </select>
 
-          <select className="form-control mb-3" onChange={(e) => this.changeOptions(e)}>
-          {this.state[this.state.selectedOption].map((e, i) => <option key={i}>{e.name}</option>)}
+          <select className="form-control mb-3" onChange={(e) => this.changeOptions(e)} id="unitSelect">
+          {this.state[this.state.selectedOption].map((e, i) => <option value={e.name} key={i}>{e.name}</option>)}
           </select>
         <hr />
 
-        <h5></h5>
+        <h5 className="text-center">{this.state.selectedUnit.name}</h5>
+        <div className="row justify-content-center">
+          <img className="img-fluid mb-4" src={require(`../../images/units/${this.state.selectedUnit.name}.jpg`)}/>
+        </div>
 
+        <h5>Description</h5>
+        <p>{this.state.selectedUnit.description}</p>
+
+        <h5>Stats:</h5>
         <ul>
-        <li>Test</li>
+        <Details name={"Hit Points"} value={this.state.selectedUnit.hit_points}/>
+        <Details name={"Attack"} value={this.state.selectedUnit.attack}/>
+        <Details name={"Range"} value={this.state.selectedUnit.range}/>
+        <Details name={"Armour"} value={this.state.selectedUnit.armor}/>
         </ul>
+
+        <h5>Cost:</h5>
+        
+
        </>
 
      );
    }
-
  }
+
+
+class Details extends Component{
+  constructor(props){
+    super(props);
+  }
+
+  render(){
+    return(
+      <>
+      {this.props.value ? <li><b>{this.props.name}: </b>{this.props.value}</li> : <li><b>{this.props.name}: </b>N/A</li>}
+      </>
+    );
+  }
+}
 
 
 export default UnitComponent;
