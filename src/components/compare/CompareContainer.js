@@ -1,6 +1,6 @@
 /**
  * @Date:   2019-10-23T19:30:59+01:00
- * @Last modified time: 2019-10-25T19:30:34+01:00
+ * @Last modified time: 2019-10-25T19:39:59+01:00
  */
 
  import React, {Component} from 'react';
@@ -19,16 +19,17 @@
        message: "",
        style: {color: "red"},
        unitOne: {},
-       unitTwo: {}
+       unitTwo: {},
+       totalResources: 0
      };
    }
 
    calculate = function(unit, total, identity){//callback function from child cards to pass total cost
 
-     console.log(arguments);
+     // console.log(arguments);
      if(identity === 1) this.setState({unitOne: {name: unit, total: total}}, () => console.log(this.state.unitOne));
      if(identity === 2) this.setState({unitTwo: {name: unit, total: total}}, () => console.log(this.state.unitTwo));
-     
+
    }.bind(this);
 
    parseinput(e){
@@ -40,7 +41,7 @@
     }
 
      let parsed = parseInt(e.target.value);
-     !isNaN(parsed) ? this.setState({message: `${parsed} Total Resources will give you:`, style:{color: "black"}}) : this.setState({message: "Input Must be a Number", style: {color: "red"}})
+     !isNaN(parsed) ? this.setState({message: `${parsed} Total Resources will give you:`, style:{color: "black"}}, () => this.setState({totalResources: parsed})) : this.setState({message: "Input Must be a Number", style: {color: "red"}})
    }
 
    render(){
@@ -71,6 +72,9 @@
                   <label>Total Resources</label>
                   <input name="resources" className="form-control" onChange={(e) => this.parseinput(e)}/>
                   <small style={this.state.style}>{this.state.message}</small>
+                  <hr />
+                  <p><b>({this.state.unitOne.total} Cost) {this.state.unitOne.name}s:</b> {Math.floor(this.state.totalResources/this.state.unitOne.total)}</p>
+                  <p><b>({this.state.unitTwo.total} Cost) {this.state.unitTwo.name}s: </b> {Math.floor(this.state.totalResources/this.state.unitTwo.total)}</p>
                 </div>
                 </div>
               </div>
