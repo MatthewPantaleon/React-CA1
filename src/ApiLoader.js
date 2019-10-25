@@ -1,6 +1,6 @@
 /**
  * @Date:   2019-10-22T11:26:33+01:00
- * @Last modified time: 2019-10-24T19:28:57+01:00
+ * @Last modified time: 2019-10-25T13:55:42+01:00
  */
 
 import React from 'react';
@@ -13,29 +13,35 @@ import $ from 'jquery';
    let apiEnd = "";
    let results = [];
 
+   //boolean variables
+   let noId = id === undefined;
+   let withId = typeof id === "number";
+   let stringType = typeof type === "string";
+
+
    // check input params
-   if(type === "civ" && id === undefined && typeof type === "string"){//get all Civs
+   if(type === "civ" && noId && stringType){//get all Civs
      console.log("Get all civs");
      apiEnd = "civilizations"
-   }else if(type === "civ" && typeof id === "number" && typeof type === "string"){//get civ with this id
+   }else if(type === "civ" && withId && stringType){//get civ with this id
      console.log("Get civ with Id");
      apiEnd = `civilization/${id}`;
-   }else if(type === "unit" && id === undefined && typeof type === "string"){//get all units
+   }else if(type === "unit" && noId && stringType){//get all units
      console.log("Get all units");
      apiEnd = `units`;
-   }else if(type === "unit" && typeof id === "number" && typeof type === "string"){//get unit with this id
+   }else if(type === "unit" && withId && stringType){//get unit with this id
      console.log("Get unit with Id");
       apiEnd = `unit/${id}`;
-   }else if(type === "struct" && id === undefined && typeof type === "string"){//get all structures
+   }else if(type === "struct" && noId && stringType){//get all structures
      console.log("Get all strcutures");
       apiEnd = `structures`;
-   }else if(type === "struct" && typeof id === "number" && typeof type === "string"){//get structure with id
+   }else if(type === "struct" && withId && stringType){//get structure with id
      console.log("Get structure with Id");
      apiEnd = `structure/${id}`;
-   }else if(type === "tech" && id === undefined && typeof type === "string"){//get all techs
+   }else if(type === "tech" && noId && stringType){//get all techs
      console.log("Get all techs");
      apiEnd = `technologies`;
-   }else if(type === "tech" && typeof id === "number" && typeof type === "string"){//get tech with id
+   }else if(type === "tech" && withId && stringType){//get tech with id
      console.log("Get tech with id");
      apiEnd = `technology/${id}`;
 
@@ -44,7 +50,7 @@ import $ from 'jquery';
    }
 
    //if the first parameter was a string and/or with id
-   if(typeof type === "string" && (id === undefined || typeof id === "number")){
+   if(stringType && (noId || withId)){
 
      return JSON.parse($.ajax({
        type: "GET",
@@ -52,7 +58,7 @@ import $ from 'jquery';
        async: false
      }).responseText);
 
-   }else if(Array.isArray(type) && id === undefined && typeof type !== "string"){//if an array of endpoints are given
+   }else if(Array.isArray(type) && noId && !stringType){//if an array of endpoints are given
 
      for(let i = 0; i < type.length; i++){
        $.ajax({

@@ -1,6 +1,6 @@
 /**
  * @Date:   2019-10-22T18:41:31+01:00
- * @Last modified time: 2019-10-24T19:28:11+01:00
+ * @Last modified time: 2019-10-25T13:46:17+01:00
  */
 
 import React, {Component} from 'react';
@@ -30,7 +30,7 @@ ApiLoader("tech");
 
 
 
-     if(!localStorage.getItem("d")){
+     if(!localStorage.getItem("c")){
        this.setState({data: ApiLoader("civ")}, () =>
         this.setState({selectedCiv: this.state.data.civilizations[0]}, () => {
           // console.log(this.state);
@@ -38,11 +38,11 @@ ApiLoader("tech");
             unique_tech: ApiLoader(this.state.selectedCiv.unique_tech),
             unique_unit: ApiLoader(this.state.selectedCiv.unique_unit),
             team_bonus: this.state.selectedCiv.team_bonus
-          }, () => {localStorage.setItem("d", JSON.stringify(this.state))});
+          }, () => {localStorage.setItem("c", JSON.stringify(this.state))});
         }
       ));
     }else{
-      this.setState(JSON.parse(localStorage.getItem("d")));
+      this.setState(JSON.parse(localStorage.getItem("c")));
     }
 
    }

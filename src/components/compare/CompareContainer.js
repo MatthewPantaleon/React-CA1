@@ -1,6 +1,6 @@
 /**
  * @Date:   2019-10-23T19:30:59+01:00
- * @Last modified time: 2019-10-24T18:20:34+01:00
+ * @Last modified time: 2019-10-25T15:01:31+01:00
  */
 
  import React, {Component} from 'react';
@@ -30,7 +30,7 @@
         <div className="col-6">
           <div className="card">
             <div className="card-body">
-              <p>Test</p>
+              <UnitComponent />
             </div>
           </div>
         </div>
