@@ -1,6 +1,6 @@
 /**
  * @Date:   2019-10-23T19:30:59+01:00
- * @Last modified time: 2019-10-25T18:41:38+01:00
+ * @Last modified time: 2019-10-25T19:30:34+01:00
  */
 
  import React, {Component} from 'react';
@@ -14,6 +14,33 @@
  class CompareContainer extends Component{
    constructor(props){
      super(props);
+
+     this.state = {
+       message: "",
+       style: {color: "red"},
+       unitOne: {},
+       unitTwo: {}
+     };
+   }
+
+   calculate = function(unit, total, identity){//callback function from child cards to pass total cost
+
+     console.log(arguments);
+     if(identity === 1) this.setState({unitOne: {name: unit, total: total}}, () => console.log(this.state.unitOne));
+     if(identity === 2) this.setState({unitTwo: {name: unit, total: total}}, () => console.log(this.state.unitTwo));
+     
+   }.bind(this);
+
+   parseinput(e){
+     // console.log(e.target.value);
+
+    if(e.target.value === "" || e.target.value === undefined){
+      this.setState({message: ""});
+      return;
+    }
+
+     let parsed = parseInt(e.target.value);
+     !isNaN(parsed) ? this.setState({message: `${parsed} Total Resources will give you:`, style:{color: "black"}}) : this.setState({message: "Input Must be a Number", style: {color: "red"}})
    }
 
    render(){
@@ -22,7 +49,7 @@
         <div className="col-lg-6 col-sm-12">
           <div className="card mb-4">
             <div className="card-body">
-              <UnitComponent />
+              <UnitComponent recieveData={this.calculate} cardNo={1}/>
             </div>
           </div>
         </div>
@@ -30,7 +57,7 @@
         <div className="col-lg-6 col-sm-12 mb-4">
           <div className="card">
             <div className="card-body">
-              <UnitComponent />
+              <UnitComponent recieveData={this.calculate} cardNo={2}/>
             </div>
           </div>
         </div>
@@ -40,7 +67,10 @@
               <div className="col-lg-6 col-md-8 col-sm-12">
                 <div className="card">
                 <div className="card-body">
-                  
+                  <h5 className="text-center">Unit Calculator</h5>
+                  <label>Total Resources</label>
+                  <input name="resources" className="form-control" onChange={(e) => this.parseinput(e)}/>
+                  <small style={this.state.style}>{this.state.message}</small>
                 </div>
                 </div>
               </div>

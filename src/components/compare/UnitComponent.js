@@ -1,6 +1,6 @@
 /**
  * @Date:   2019-10-24T16:34:54+01:00
- * @Last modified time: 2019-10-25T18:34:19+01:00
+ * @Last modified time: 2019-10-25T19:31:54+01:00
  */
 
  import React, {Component} from 'react';
@@ -93,7 +93,9 @@ function getUnits(arrayOfNames){
 
      //get all imperial archery range units *Elite Skirmisher is Castle Age but Imperial Skirmisher does not exist in Age of Conquerors
      this.setState({Archers: getUnits(archerArray)}, () => {
-       this.setState({selectedUnit: this.state.Archers[0]});
+       this.setState({selectedUnit: this.state.Archers[0]}, () => {
+         this.setState({totalCost: Object.values(this.state.selectedUnit.cost).reduce((a, b) => a + b)}, () => this.props.recieveData(this.state.selectedUnit.name, this.state.totalCost, this.props.cardNo));//add up total cost of a unit per change of unit on load
+       });
      });
 
      //get all Imperial Cavalry units
@@ -124,7 +126,7 @@ function getUnits(arrayOfNames){
      this.setState({selectedOption: unitType}, () => {//change unit type
        this.setState({selectedUnit: this.state[this.state.selectedOption][unitIndex]}, () => {//change selected unit to reflect type and sub index
          // console.log(this.state.selectedUnit);
-         this.setState({totalCost: Object.values(this.state.selectedUnit.cost).reduce((a, b) => a + b)});//add up total cost of a unit per change of unit
+         this.setState({totalCost: Object.values(this.state.selectedUnit.cost).reduce((a, b) => a + b)}, () => this.props.recieveData(this.state.selectedUnit.name, this.state.totalCost, this.props.cardNo));//add up total cost of a unit per change of unit
        });
      });
    }
