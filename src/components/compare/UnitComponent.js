@@ -1,6 +1,6 @@
 /**
  * @Date:   2019-10-24T16:34:54+01:00
- * @Last modified time: 2019-10-25T17:37:25+01:00
+ * @Last modified time: 2019-10-25T18:22:33+01:00
  */
 
  import React, {Component} from 'react';
@@ -58,7 +58,8 @@ function getUnits(arrayOfNames){
        Cavalry: [],
        Ships: [],
        selectedOption: "Archers",
-       selectedUnit: {name: "Arbalest"}
+       selectedUnit: {name: "Arbalest", cost: {}, attack_bonus: []},
+       totalCost: 0
      };
 
      this.structs = ["Archers", "Infantry", "Cavalry", "Ships"];
@@ -121,9 +122,13 @@ function getUnits(arrayOfNames){
      }
 
      this.setState({selectedOption: unitType}, () => {
-       this.setState({selectedUnit: this.state[this.state.selectedOption][unitIndex]}, () => console.log(this.state.selectedUnit));
+       this.setState({selectedUnit: this.state[this.state.selectedOption][unitIndex]}, () => {
+         console.log(this.state.selectedUnit);
+         this.setState({totalCost: Object.values(this.state.selectedUnit.cost).reduce((a, b) => a + b)});
+       });
      });
    }
+
 
    render(){
      return(
@@ -154,14 +159,52 @@ function getUnits(arrayOfNames){
         <Details name={"Armour"} value={this.state.selectedUnit.armor}/>
         </ul>
 
-        <h5>Cost:</h5>
-        
+        <hr />
 
+        <ul>
+        <Details name={"Age"} value={this.state.selectedUnit.age}/>
+        <Details name={"Build Time"} value={this.state.selectedUnit.build_time}/>
+        <Details name={"Expansion"} value={this.state.selectedUnit.expansion}/>
+        <Details name={"Line of Sight"} value={this.state.selectedUnit.line_of_sight}/>
+        <Details name={"Movement Speed"} value={this.state.selectedUnit.movement_rate}/>
+        <Details name={"Reload Time"} value={this.state.selectedUnit.reload_time}/>
+        <Details name={"Accuracy"} value={this.state.selectedUnit.accuracy}/>
+        </ul>
+
+        <h5>Cost:</h5>
+        <ul>
+        {Object.keys(this.state.selectedUnit.cost).map((e, i) => {
+          return <li key={e}><b>{e}</b>: {Object.values(this.state.selectedUnit.cost)[i]}</li>;
+        })}
+        </ul>
+        <hr />
+        <h5>Attack Bonuses:</h5>
+        {this.state.selectedUnit.attack_bonus ?<ul>{this.state.selectedUnit.attack_bonus.map((e, i) => <li key={i}>{e}</li>)}</ul> : <li>N/A</li>}
        </>
 
      );
    }
  }
+
+class Cost extends Component{
+  constructor(props){
+    super(props);
+  }
+
+  converter(obj){//converst objects to an array of keys or values
+    let normalised = {};
+
+  }
+
+  render(){
+    return(
+      <>
+
+      </>
+    );
+  }
+
+}
 
 
 class Details extends Component{
