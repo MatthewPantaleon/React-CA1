@@ -1,6 +1,6 @@
 /**
  * @Date:   2019-10-23T19:30:59+01:00
- * @Last modified time: 2019-10-25T15:01:31+01:00
+ * @Last modified time: 2019-10-25T15:04:59+01:00
  */
 
  import React, {Component} from 'react';
@@ -19,15 +19,15 @@
    render(){
      return(
        <div className="row">
-        <div className="col-6">
-          <div className="card">
+        <div className="col-lg-6 col-sm-12">
+          <div className="card mb-4">
             <div className="card-body">
               <UnitComponent />
             </div>
           </div>
         </div>
 
-        <div className="col-6">
+        <div className="col-lg-6 col-sm-12">
           <div className="card">
             <div className="card-body">
               <UnitComponent />

@@ -1,6 +1,6 @@
 /**
  * @Date:   2019-10-24T16:34:54+01:00
- * @Last modified time: 2019-10-25T15:02:17+01:00
+ * @Last modified time: 2019-10-25T15:45:57+01:00
  */
 
  import React, {Component} from 'react';
@@ -56,7 +56,8 @@ function getUnits(arrayOfNames){
        Infantry: [],
        Cavalry: [],
        Ships: [],
-       selectedOption: "Archers"
+       selectedOption: "Archers",
+       selectedUnit: {}
      };
 
      this.structs = ["Archers", "Infantry", "Cavalry", "Ships"];
@@ -98,23 +99,46 @@ function getUnits(arrayOfNames){
      this.setState({Ships: getUnits(shipArray)});
    }
 
+   //when type of units changes get the first unit from the list
    changeOptions(e){
-     // console.log(e.target.value);
-     this.setState({selectedOption: e.target.value});
+     console.log(e.target.value);
+     let s = this.state; // substitution doesn't work?
+
+     let unitType = "";
+     let unitIndex = 0;
+
+     if(this.structs.includes(e.target.name)){
+       console.log("HUH?");
+       unitType = e.target.name;
+     }else{
+       unitType = this.state.selectedOption;
+       unitIndex = this.state[this.state.selectedOption].findIndex((name) => name);
+     }
+
+     this.setState({selectedOption: unitType}, () => {
+       this.setState({selectedUnit: this.state[this.state.selectedOption][unitIndex]}, () => console.log(this.state.selectedUnit));
+     });
+   }
+
+   changeSubUnit(e){
+     console.log(e.target.value);
+    // this.setState({selectedUnit: this.state[this.state.selectedOption][this.state[this.state.selectedOption].findIndex(name => name)]}, () => console.log(this.state.selectedUnit));
    }
 
    render(){
      return(
        <>
-        <select className="form-control mb-3" onChange={(e) => this.changeOptions(e)}>
-        {this.structs.map((e, i) => <option key={i} value={e}>{e}</option>)}
-        </select>
 
-        <select className="form-control">
-        {this.state[this.state.selectedOption].map((e, i) => <option key={i}>{e.name}</option>)}
-        </select>
+          <select className="form-control mb-3" onChange={(e) => this.changeOptions(e)}>
+          {this.structs.map((e, i) => <option key={i} value={e}>{e}</option>)}
+          </select>
 
+          <select className="form-control mb-3" onChange={(e) => this.changeOptions(e)}>
+          {this.state[this.state.selectedOption].map((e, i) => <option key={i}>{e.name}</option>)}
+          </select>
         <hr />
+
+        <h5></h5>
 
         <ul>
         <li>Test</li>
