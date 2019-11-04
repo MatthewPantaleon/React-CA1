@@ -1,10 +1,9 @@
 /**
  * @Date:   2019-10-22T18:41:31+01:00
- * @Last modified time: 2019-11-04T16:59:15+00:00
+ * @Last modified time: 2019-11-04T19:24:49+00:00
  */
 
 import React, {Component} from 'react';
-import * as ReactCSS from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ApiLoader from '../../ApiLoader';
 
@@ -24,6 +23,7 @@ ApiLoader("tech");
      };
    }
 
+   //fucntion expression for more control when and how to call the API
    A = (v) => {
      return ApiLoader(v);
    };
@@ -49,6 +49,7 @@ ApiLoader("tech");
    changeValue(e){
        this.setState({selectedCiv: this.state.data.civilizations[parseInt(e.target.value)]}, () =>{
          this.setState({
+           //the api has to be called every time a new civ is loaded even from localStorage as the API returns endpoints that must be called again
            unique_tech: this.A(this.state.selectedCiv.unique_tech),
            unique_unit: this.A(this.state.selectedCiv.unique_unit),
            team_bonus: this.state.selectedCiv.team_bonus
@@ -87,6 +88,7 @@ ApiLoader("tech");
         </div>
       </div>
 
+      {/* Civ information */}
       <h5>Civilization Bonuses:</h5>
 
       <ul>
@@ -97,12 +99,12 @@ ApiLoader("tech");
 
       <h5>Unique Tech:</h5>
       <ul>
-      {this.state.unique_tech.map((e, i) => <li className="mb-2" key={i}><img  className="mr-2" src={require(`../../images/civ/Unique-tech.jpg`)}/><b>{e.name}:</b> {e.description}</li>)}
+      {this.state.unique_tech.map((e, i) => <li className="mb-2" key={i}><img  className="mr-2" src={require(`../../images/civ/Unique-tech.jpg`)} alt={e.name}/><b>{e.name}:</b> {e.description}</li>)}
       </ul>
 
       <h5>Unique Unit:</h5>
       <ul>
-      {this.state.unique_unit.map((e, i) => <li className="mb-2" key={i}><img className="mr-2" src={require(`../../images/civ/unique_units/${e.name}.jpg`)}/><b>{e.name}:</b> {e.description}</li>)}
+      {this.state.unique_unit.map((e, i) => <li className="mb-2" key={i}><img className="mr-2" src={require(`../../images/civ/unique_units/${e.name}.jpg`)} alt={e.name}/><b>{e.name}:</b> {e.description}</li>)}
       </ul>
 
       <hr />

@@ -1,10 +1,8 @@
 /**
  * @Date:   2019-10-22T11:26:33+01:00
- * @Last modified time: 2019-10-25T13:55:42+01:00
+ * @Last modified time: 2019-11-04T19:11:48+00:00
  */
 
-import React from 'react';
-import ReactDOM from 'react-dom';
 import $ from 'jquery';
 
  export default function ApiLoader(type, id){
@@ -45,11 +43,13 @@ import $ from 'jquery';
      console.log("Get tech with id");
      apiEnd = `technology/${id}`;
 
-   }else if(type === undefined){
-     throw "Mssing type Parameter for API call. String or Array for first argument and optional id";
+   }else if(type === undefined){//throw error if parameters are mismatched
+     let e = {message: "Mssing type Parameter for API call. String or Array for first argument and optional id"};
+
+     throw e.message;
    }
 
-   //if the first parameter was a string and/or with id
+   //if the first parameter was a string with or without id
    if(stringType && (noId || withId)){
 
      return JSON.parse($.ajax({
@@ -68,6 +68,9 @@ import $ from 'jquery';
          dataType: "JSON",
          success(data){
            results.push(data);
+         },
+         error(e){
+           console.log(e.message)
          }
        });
      }

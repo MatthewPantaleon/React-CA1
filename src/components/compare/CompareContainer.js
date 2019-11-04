@@ -1,11 +1,9 @@
 /**
  * @Date:   2019-10-23T19:30:59+01:00
- * @Last modified time: 2019-11-04T18:38:07+00:00
+ * @Last modified time: 2019-11-04T19:21:08+00:00
  */
 
 import React, {Component} from 'react';
-import * as ReactCSS from 'react-bootstrap';
-import {BrowserRouter, Route, Link, Switch, Redirect} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ApiLoader from '../../ApiLoader';
 
@@ -17,8 +15,6 @@ import UnitComponent from './UnitComponent';
    constructor(props){
      super(props);
 
-
-
      this.state = {
        message: "",
        style: {color: "red"},
@@ -29,17 +25,19 @@ import UnitComponent from './UnitComponent';
      };
    }
 
+   //fucntion expression for more control when and how to call the API
    A = (v) => {
      return ApiLoader(v);
    };
 
-   calculate = function(unit, total, identity){//callback function from child cards to pass total cost
+   calculate = function(unit, total, identity){//callback function from child cards to calculate total cost
 
      // console.log(arguments);
      this.setState({["unit" + identity]: {name: unit, total: total}});
 
-   }.bind(this);
+   }.bind(this);//bind function to the CompareContainer Context
 
+   //check input value and display messages accordingly
    parseinput(e){
      // console.log(e.target.value);
 
@@ -94,6 +92,7 @@ import UnitComponent from './UnitComponent';
                   <input name="resources" className="form-control" onChange={(e) => this.parseinput(e)}/>
                   <small style={this.state.style}>{this.state.message}</small>
                   <hr />
+                  {/*Display total units that resources can buy*/}
                   <p><b>({this.state.unit1.total} Cost) {this.state.unit1.name}s:</b> {Math.floor(this.state.totalResources/this.state.unit1.total)}.</p>
                   <p><b>({this.state.unit2.total} Cost) {this.state.unit2.name}s: </b> {Math.floor(this.state.totalResources/this.state.unit2.total)}.</p>
                 </div>

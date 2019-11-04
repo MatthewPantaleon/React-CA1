@@ -1,13 +1,11 @@
 /**
  * @Date:   2019-10-15T15:11:22+01:00
- * @Last modified time: 2019-10-25T18:42:18+01:00
+ * @Last modified time: 2019-11-04T19:21:57+00:00
  */
 
 
 
 import React, {Component} from 'react';
-import * as ReactCSS from 'react-bootstrap';
-import {BrowserRouter, Route, Link, Switch, Redirect} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import CivComponent from './components/civ/CivComponent';
@@ -18,6 +16,7 @@ import Tab from './components/ui/tabs';
 class App extends Component{
   render(){
 
+    //array of routes and paths
     let tabs = [
         {comp: CivComponent, path: "/civilizations", name:"Civilizations"},
         {comp: CompareContainer, path: "/compare", name: "Compare"},

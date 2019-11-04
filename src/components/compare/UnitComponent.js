@@ -1,11 +1,9 @@
 /**
  * @Date:   2019-10-24T16:34:54+01:00
- * @Last modified time: 2019-11-04T18:58:06+00:00
+ * @Last modified time: 2019-11-04T19:18:11+00:00
  */
 
 import React, {Component} from 'react';
-import * as ReactCSS from 'react-bootstrap';
-import {BrowserRouter, Route, Link, Switch, Redirect} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 /*
@@ -14,7 +12,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
   Stable: Hussar, Paladin, Heavy Camel
   Dock: Fast Fire Ship, Elite Cannon Galleon, Galleon
 
-  blacksmith: //NOt implemented
+  blacksmith: //NOT IMPLEMENTED
     archer armor: {padde archer(1/1), leather archer armor(1/1), ring archer armor(1/2))
     archer attack: {fletching(1), bodkin arrow(1), bracer(1), gunpowerder(1)}
     inf and cav attack: {forging(1), ironcasting(1), blast furnace(2)}
@@ -26,7 +24,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
  class UnitComponent extends Component{
 
    constructor(props){
-     super(props);
+     super(props)
 
      this.state = {
        units: [],
@@ -62,25 +60,26 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
    componentDidMount(){
 
-     if(localStorage.getItem("u")){
+     if(localStorage.getItem("u")){//check if the units are in storage, if so change state accordingly
        this.setState({units: JSON.parse(localStorage.getItem("u")).units}, () => {
 
-         this.setState({
+         this.setState({//get the unit objects from name arrays
            archersArray: this.getUnits(this.archersArray),
            infantryArray: this.getUnits(this.infantryArray),
            cavalryArray: this.getUnits(this.cavalryArray),
            shipsArray: this.getUnits(this.shipsArray)
          }, () => {
+           //set default selected unit
            this.setState({selectedUnit: this.state.archersArray[0]}, () => {
 
              let costArray = Object.values(this.state.selectedUnit.cost);
-             this.props.recieveData(this.state.selectedUnit.name, costArray.reduce((a, b) => a + b), this.props.cardNo);
+             this.props.recieveData(this.state.selectedUnit.name, costArray.reduce((a, b) => a + b), this.props.cardNo);//send cost data bak to parent
 
            })
          });
 
        });
-     }else{//if the localstorage hasn't been set
+     }else{//if the localstorage hasn't been set and change state accordingly and set localStorage
        this.setState({units: this.props.resend("unit").units}, () => {
          localStorage.setItem("u", JSON.stringify(this.state.units));
 
@@ -90,10 +89,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
            cavalryArray: this.getUnits(this.cavalryArray),
            shipsArray: this.getUnits(this.shipsArray)
          }, () => {
-           this.setState({selectedUnit: this.state.archersArray[0]}, () =>{
+           this.setState({selectedUnit: this.state.archersArray[0]}, () =>{//set default selected unit
 
              let costArray = Object.values(this.state.selectedUnit.cost);
-             this.props.recieveData(this.state.selectedUnit.name, costArray.reduce((a, b) => a + b), this.props.cardNo);
+             this.props.recieveData(this.state.selectedUnit.name, costArray.reduce((a, b) => a + b), this.props.cardNo);//send cost data bak to parent
            })
          });
 
@@ -122,31 +121,24 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
        this.setState({
          selectedOption: nameString + "Array",
-         selectedUnit: this.state[nameString + "Array"][0]
+         selectedUnit: this.state[nameString + "Array"][0] //reset selected unit to first item of new units
        }, () => {//return total cost bact to parent component
-
          let costArray = Object.values(this.state.selectedUnit.cost);
-
          this.props.recieveData(this.state.selectedUnit.name, costArray.reduce((a, b) => a + b), this.props.cardNo);
        });
 
 
      }else if(av || iv || cv || sv){//if individual unit is changed
        console.log("UNIT CHANGE");
-
-       let index = this.state[this.state.selectedOption].findIndex((ele) => ele.name === e.target.value);
+       let index = this.state[this.state.selectedOption].findIndex((ele) => ele.name === e.target.value);//find index value from name value
 
        this.setState({
-         selectedUnit: this.state[this.state.selectedOption][index]
-       }, () => {//return total cost bact to parent component
-
+         selectedUnit: this.state[this.state.selectedOption][index]//selected unit from index
+       }, () => {
          let costArray = Object.values(this.state.selectedUnit.cost);
-
-         this.props.recieveData(this.state.selectedUnit.name, costArray.reduce((a, b) => a + b), this.props.cardNo);
+         this.props.recieveData(this.state.selectedUnit.name, costArray.reduce((a, b) => a + b), this.props.cardNo);//return total cost bact to parent component
        });
-
      }
-
    }
 
 
@@ -154,15 +146,18 @@ import 'bootstrap/dist/css/bootstrap.min.css';
      return(
        <>
 
+        {/* Change unit type */}
         <select className="form-control mb-3" onChange={(e) => this.changeOptions(e)}>
         {this.structs.map((e, i) => <option key={i} value={e}>{e}</option>)}
         </select>
 
+        {/* CHange individual Unit */}
         <select className="form-control mb-3" onChange={(e) => this.changeOptions(e)} id="unitSelect">
         {this.state[this.state.selectedOption].map((e, i) => <option value={e.name} key={i}>{e.name}</option>)}
         </select>
         <hr />
 
+        {/*Unit information */}
         <h5 className="text-center">{this.state.selectedUnit.name}</h5>
         <div className="row justify-content-center">
           <img className="img-fluid mb-4" src={require(`../../images/units/${this.state.selectedUnit.name}.jpg`)} alt={this.state.selectedUnit.name}/>
@@ -215,6 +210,7 @@ class Details extends Component{
   render(){
     return(
       <>
+      {/* Return a value or N/A */}
       {this.props.value ? <li><b>{this.props.name}: </b>{this.props.value}</li> : <li><b>{this.props.name}: </b>N/A</li>}
       </>
     );
