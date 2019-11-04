@@ -1,6 +1,6 @@
 /**
  * @Date:   2019-10-24T16:34:54+01:00
- * @Last modified time: 2019-11-04T17:24:58+00:00
+ * @Last modified time: 2019-11-04T18:05:46+00:00
  */
 
 import React, {Component} from 'react';
@@ -36,14 +36,14 @@ import $ from 'jquery';
        infantryArray: [],
        cavalryArray: [],
        shipsArray: [],
-       selectedOption: "Archers",
+       selectedOption: "archersArray",
        unitOptions: [],
        selectedUnit: {name: "Arbalest", cost: {}, attack_bonus: []},
        totalCost: 0
      };
 
      this.structs = ["Archers", "Infantry", "Cavalry", "Ships"];
-     this.archerArray = ["Arbalest", "Hand Cannoneer", "Heavy Cavalry Archer", "Elite Skirmisher"];
+     this.archersArray = ["Arbalest", "Hand Cannoneer", "Heavy Cavalry Archer", "Elite Skirmisher"];
      this.infantryArray = ["Champion", "Halberdier", "Elite Eagle Warrior"];
      this.cavalryArray = ["Hussar", "Paladin", "Heavy Camel"];
      this.shipsArray = ["Fast Fire Ship", "Elite Cannon Galleon", "Galleon"];
@@ -51,14 +51,11 @@ import $ from 'jquery';
 
    getUnits(arrayOfNames){
      let temp = [];
-
-
      for(let j = 0; j < this.state.units.length; j++){
        if(arrayOfNames.includes(this.state.units[j].name)){
          temp.push(this.state.units[j]);
        }
      }
-
      return temp;
    }
 
@@ -66,40 +63,88 @@ import $ from 'jquery';
 
    componentDidMount(){
 
-     let tempArchers = [];
-     let tempInfantry = [];
-     let tempCavalry = [];
-     let tempShips = [];
-
      if(localStorage.getItem("u")){
        this.setState({units: JSON.parse(localStorage.getItem("u")).units}, () => {
-         console.log("COOLIO");
-         console.log(this.state.units);
+
          this.setState({
-           archersArray: this.getUnits(this.archerArray),
+           archersArray: this.getUnits(this.archersArray),
            infantryArray: this.getUnits(this.infantryArray),
            cavalryArray: this.getUnits(this.cavalryArray),
            shipsArray: this.getUnits(this.shipsArray)
-         }, () => console.log(this.state));
+         }, () => {
+           this.setState({selectedUnit: this.state.archersArray[0]}, () => {
+
+             let costArray = Object.values(this.state.selectedUnit.cost);
+             this.props.recieveData(this.state.selectedUnit.name, costArray.reduce((a, b) => a + b), this.props.cardNo);
+
+           })
+         });
+
        });
-     }else{
-       this.setState({units: this.props.resend("unit")}, () => localStorage.setItem("u", JSON.stringify(this.state.units)));
+     }else{//if the localstorage hasn't been set
+       this.setState({units: this.props.resend("unit")}, () => {
+         localStorage.setItem("u", JSON.stringify(this.state.units));
+
+         this.setState({
+           archersArray: this.getUnits(this.archersArray),
+           infantryArray: this.getUnits(this.infantryArray),
+           cavalryArray: this.getUnits(this.cavalryArray),
+           shipsArray: this.getUnits(this.shipsArray)
+         }, () => {
+           this.setState({selectedUnit: this.state.archersArray[0]}, () =>{
+             let costArray = Object.values(this.state.selectedUnit.cost);
+             this.props.recieveData(this.state.selectedUnit.name, costArray.reduce((a, b) => a + b), this.props.cardNo);
+           })
+         });
+
+       });
      }
-
-     this.setState({
-       unitOptions: this.archerArray
-     });
-
-
-
-
-     //get all unit objects for each unit type array
 
 
    }
 
    //when type of units changes get the first unit from the list
    changeOptions(e){
+
+     //boolean properties
+     let av = this.archersArray.includes(e.target.value);
+     let iv = this.infantryArray.includes(e.target.value);
+     let cv = this.cavalryArray.includes(e.target.value);
+     let sv = this.shipsArray.includes(e.target.value);
+     let stv = this.structs.includes(e.target.value);
+
+     //make first character lowercase
+     let nameString = e.target.value.charAt(0).toLowerCase() + e.target.value.substring(1);
+
+     //if unit type is changed
+     if(stv){
+
+       this.setState({
+         selectedOption: nameString + "Array",
+         selectedUnit: this.state[nameString + "Array"][0]
+       }, () => {//return total cost bact to parent component
+
+         let costArray = Object.values(this.state.selectedUnit.cost);
+
+         this.props.recieveData(this.state.selectedUnit.name, costArray.reduce((a, b) => a + b), this.props.cardNo);
+       });
+
+
+     }else if(av || iv || cv || sv){//if individual unit is changed
+       console.log("UNIT CHANGE");
+
+       let index = this.state[this.state.selectedOption].findIndex((ele) => ele.name === e.target.value);
+
+       this.setState({
+         selectedUnit: this.state[this.state.selectedOption][index]
+       }, () => {//return total cost bact to parent component
+
+         let costArray = Object.values(this.state.selectedUnit.cost);
+
+         this.props.recieveData(this.state.selectedUnit.name, costArray.reduce((a, b) => a + b), this.props.cardNo);
+       });
+
+     }
 
    }
 
@@ -113,7 +158,7 @@ import $ from 'jquery';
         </select>
 
         <select className="form-control mb-3" onChange={(e) => this.changeOptions(e)} id="unitSelect">
-        {/*this.state[this.state.selectedOption].map((e, i) => <option value={e.name} key={i}>{e.name}</option>) */}
+        {this.state[this.state.selectedOption].map((e, i) => <option value={e.name} key={i}>{e.name}</option>)}
         </select>
         <hr />
 

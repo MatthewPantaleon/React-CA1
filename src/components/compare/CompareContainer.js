@@ -1,6 +1,6 @@
 /**
  * @Date:   2019-10-23T19:30:59+01:00
- * @Last modified time: 2019-11-04T17:04:40+00:00
+ * @Last modified time: 2019-11-04T18:06:06+00:00
  */
 
 import React, {Component} from 'react';
@@ -22,8 +22,8 @@ import UnitComponent from './UnitComponent';
      this.state = {
        message: "",
        style: {color: "red"},
-       unitOne: {},
-       unitTwo: {},
+       unit1: {},
+       unit2: {},
        totalResources: 0,
        units: []
      };
@@ -36,8 +36,7 @@ import UnitComponent from './UnitComponent';
    calculate = function(unit, total, identity){//callback function from child cards to pass total cost
 
      // console.log(arguments);
-     if(identity === 1) this.setState({unitOne: {name: unit, total: total}}, () => console.log(this.state.unitOne));
-     if(identity === 2) this.setState({unitTwo: {name: unit, total: total}}, () => console.log(this.state.unitTwo));
+     this.setState({["unit" + identity]: {name: unit, total: total}}, () => console.log(this.state.unit1));
 
    }.bind(this);
 
@@ -91,8 +90,8 @@ import UnitComponent from './UnitComponent';
                   <input name="resources" className="form-control" onChange={(e) => this.parseinput(e)}/>
                   <small style={this.state.style}>{this.state.message}</small>
                   <hr />
-                  <p><b>({this.state.unitOne.total} Cost) {this.state.unitOne.name}s:</b> {Math.floor(this.state.totalResources/this.state.unitOne.total)}</p>
-                  <p><b>({this.state.unitTwo.total} Cost) {this.state.unitTwo.name}s: </b> {Math.floor(this.state.totalResources/this.state.unitTwo.total)}</p>
+                  <p><b>({this.state.unit1.total} Cost) {this.state.unit1.name}s:</b> {Math.floor(this.state.totalResources/this.state.unit1.total)}</p>
+                  <p><b>({this.state.unit2.total} Cost) {this.state.unit2.name}s: </b> {Math.floor(this.state.totalResources/this.state.unit2.total)}</p>
                 </div>
                 </div>
               </div>
