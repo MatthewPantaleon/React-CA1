@@ -1,19 +1,17 @@
 /**
  * @Date:   2019-10-24T16:34:54+01:00
- * @Last modified time: 2019-10-25T19:31:54+01:00
+ * @Last modified time: 2019-11-04T17:24:58+00:00
  */
 
- import React, {Component} from 'react';
- import * as ReactCSS from 'react-bootstrap';
- import {BrowserRouter, Route, Link, Switch, Redirect} from 'react-router-dom';
- import 'bootstrap/dist/css/bootstrap.min.css';
- import $ from 'jquery';
-
- import ApiLoader from '../../ApiLoader';
+import React, {Component} from 'react';
+import * as ReactCSS from 'react-bootstrap';
+import {BrowserRouter, Route, Link, Switch, Redirect} from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import $ from 'jquery';
 
 /*
   Barracks: Champion, Halberdier, Elite eagle Warrior
-  Archery Range:  Arbalest, Hand Cannnoneer, Heavy Cav Archer, Elite skirmisher
+  Archery Range:  Arbalest, Hand Cannoneer, Heavy Cav Archer, Elite skirmisher
   Stable: Hussar, Paladin, Heavy Camel
   Dock: Fast Fire Ship, Elite Cannon Galleon, Galleon
 
@@ -26,109 +24,83 @@
     dock: {careening(0/1)}
 */
 
-function getUnits(arrayOfNames){
-
-  let result = [];
-  let allArray = JSON.parse(localStorage.getItem("u")).units;
-
-  arrayOfNames.forEach((name, i) => {
-    for(let counter = 0; counter < allArray.length; counter++){
-      if(allArray[counter].name === name){
-        result.push(allArray[counter]);
-        break;
-      }
-    }
-  });
-  return result;
-}
-
-
  class UnitComponent extends Component{
 
    constructor(props){
      super(props);
 
      this.state = {
-       techs: {},
-       units: {},
-       strcutures: {},
+       units: [],
        age: "Imperial",
-       Archers: [],
-       Infantry: [],
-       Cavalry: [],
-       Ships: [],
+       archersArray: [],
+       infantryArray: [],
+       cavalryArray: [],
+       shipsArray: [],
        selectedOption: "Archers",
+       unitOptions: [],
        selectedUnit: {name: "Arbalest", cost: {}, attack_bonus: []},
        totalCost: 0
      };
 
      this.structs = ["Archers", "Infantry", "Cavalry", "Ships"];
+     this.archerArray = ["Arbalest", "Hand Cannoneer", "Heavy Cavalry Archer", "Elite Skirmisher"];
+     this.infantryArray = ["Champion", "Halberdier", "Elite Eagle Warrior"];
+     this.cavalryArray = ["Hussar", "Paladin", "Heavy Camel"];
+     this.shipsArray = ["Fast Fire Ship", "Elite Cannon Galleon", "Galleon"];
    }
 
-   componentDidMount(){
-     if(!localStorage.getItem("u") || !localStorage.getItem("s") || !localStorage.getItem("t")){
+   getUnits(arrayOfNames){
+     let temp = [];
 
-       //get all data
-       this.setState({techs: ApiLoader("tech")}, () => localStorage.setItem("t", JSON.stringify(this.state.techs)));
-       this.setState({structures: ApiLoader("struct")}, () => localStorage.setItem("s", JSON.stringify(this.state.strcutures)));
-       this.setState({units: ApiLoader("unit")}, () => localStorage.setItem("u", JSON.stringify(this.state.units)));
 
-     }else{
-       this.setState({techs: JSON.parse(localStorage.getItem("t"))});
-       this.setState({strcutures: JSON.parse(localStorage.getItem("s"))});
-       this.setState({units: JSON.parse(localStorage.getItem("u"))});
+     for(let j = 0; j < this.state.units.length; j++){
+       if(arrayOfNames.includes(this.state.units[j].name)){
+         temp.push(this.state.units[j]);
+       }
      }
 
-     let localUnits = JSON.parse(localStorage.getItem("u"));
-     let localStructures = JSON.parse(localStorage.getItem("s"));
-     let localTechs = JSON.parse(localStorage.getItem("t"));
+     return temp;
+   }
 
-     let infantryArray = ["Champion", "Halberdier", "Elite Eagle Warrior"];
-     let archerArray = ["Arbalest", "Hand Cannoneer", "Heavy Cavalry Archer", "Elite Skirmisher"];
-     let cavalryArray = ["Hussar", "Paladin", "Heavy Camel"];
-     let shipArray = ["Fast Fire Ship", "Elite Cannon Galleon", "Galleon"];
 
-     //get all imperial age units for the Barracks
-     this.setState({Infantry: getUnits(infantryArray)});
 
-     //get all imperial archery range units *Elite Skirmisher is Castle Age but Imperial Skirmisher does not exist in Age of Conquerors
-     this.setState({Archers: getUnits(archerArray)}, () => {
-       this.setState({selectedUnit: this.state.Archers[0]}, () => {
-         this.setState({totalCost: Object.values(this.state.selectedUnit.cost).reduce((a, b) => a + b)}, () => this.props.recieveData(this.state.selectedUnit.name, this.state.totalCost, this.props.cardNo));//add up total cost of a unit per change of unit on load
+   componentDidMount(){
+
+     let tempArchers = [];
+     let tempInfantry = [];
+     let tempCavalry = [];
+     let tempShips = [];
+
+     if(localStorage.getItem("u")){
+       this.setState({units: JSON.parse(localStorage.getItem("u")).units}, () => {
+         console.log("COOLIO");
+         console.log(this.state.units);
+         this.setState({
+           archersArray: this.getUnits(this.archerArray),
+           infantryArray: this.getUnits(this.infantryArray),
+           cavalryArray: this.getUnits(this.cavalryArray),
+           shipsArray: this.getUnits(this.shipsArray)
+         }, () => console.log(this.state));
        });
+     }else{
+       this.setState({units: this.props.resend("unit")}, () => localStorage.setItem("u", JSON.stringify(this.state.units)));
+     }
+
+     this.setState({
+       unitOptions: this.archerArray
      });
 
-     //get all Imperial Cavalry units
-     this.setState({Cavalry: getUnits(cavalryArray)});
 
-     //get all imperial ships
-     this.setState({Ships: getUnits(shipArray)});
+
+
+     //get all unit objects for each unit type array
+
+
    }
 
    //when type of units changes get the first unit from the list
    changeOptions(e){
-     // console.log(e.target.value);
-     let s = this.state; // substitution doesn't work?
 
-     let unitType = "";
-     let unitIndex = 0;
-
-     // console.log(this.structs);
-
-     if(this.structs.includes(String(e.target.value))){//if the unit type select is chosen
-       unitType = e.target.value;
-       $('#unitSelect').prop('selectedIndex',0);//reset select of units dropdown
-     }else{//if unit selection is chosen
-       unitType = this.state.selectedOption;
-       unitIndex = this.state[this.state.selectedOption].findIndex((ele) => ele.name === e.target.value);
-     }
-
-     this.setState({selectedOption: unitType}, () => {//change unit type
-       this.setState({selectedUnit: this.state[this.state.selectedOption][unitIndex]}, () => {//change selected unit to reflect type and sub index
-         // console.log(this.state.selectedUnit);
-         this.setState({totalCost: Object.values(this.state.selectedUnit.cost).reduce((a, b) => a + b)}, () => this.props.recieveData(this.state.selectedUnit.name, this.state.totalCost, this.props.cardNo));//add up total cost of a unit per change of unit
-       });
-     });
    }
 
 
@@ -136,13 +108,13 @@ function getUnits(arrayOfNames){
      return(
        <>
 
-          <select className="form-control mb-3" onChange={(e) => this.changeOptions(e)}>
-          {this.structs.map((e, i) => <option key={i} value={e}>{e}</option>)}
-          </select>
+        <select className="form-control mb-3" onChange={(e) => this.changeOptions(e)}>
+        {this.structs.map((e, i) => <option key={i} value={e}>{e}</option>)}
+        </select>
 
-          <select className="form-control mb-3" onChange={(e) => this.changeOptions(e)} id="unitSelect">
-          {this.state[this.state.selectedOption].map((e, i) => <option value={e.name} key={i}>{e.name}</option>)}
-          </select>
+        <select className="form-control mb-3" onChange={(e) => this.changeOptions(e)} id="unitSelect">
+        {/*this.state[this.state.selectedOption].map((e, i) => <option value={e.name} key={i}>{e.name}</option>) */}
+        </select>
         <hr />
 
         <h5 className="text-center">{this.state.selectedUnit.name}</h5>

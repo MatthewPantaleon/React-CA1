@@ -1,6 +1,6 @@
 /**
  * @Date:   2019-10-22T18:41:31+01:00
- * @Last modified time: 2019-10-25T16:32:42+01:00
+ * @Last modified time: 2019-11-04T16:59:15+00:00
  */
 
 import React, {Component} from 'react';
@@ -22,18 +22,20 @@ ApiLoader("tech");
        unique_tech: [],
        team_bonus: ""
      };
-
-
    }
+
+   A = (v) => {
+     return ApiLoader(v);
+   };
 
    componentDidMount(){
      if(!localStorage.getItem("c")){
-       this.setState({data: ApiLoader("civ")}, () =>
+       this.setState({data: this.A("civ")}, () =>
         this.setState({selectedCiv: this.state.data.civilizations[0]}, () => {
           // console.log(this.state);
           this.setState({
-            unique_tech: ApiLoader(this.state.selectedCiv.unique_tech),
-            unique_unit: ApiLoader(this.state.selectedCiv.unique_unit),
+            unique_tech: this.A(this.state.selectedCiv.unique_tech),
+            unique_unit: this.A(this.state.selectedCiv.unique_unit),
             team_bonus: this.state.selectedCiv.team_bonus
           }, () => {localStorage.setItem("c", JSON.stringify(this.state))});
         }
@@ -47,8 +49,8 @@ ApiLoader("tech");
    changeValue(e){
        this.setState({selectedCiv: this.state.data.civilizations[parseInt(e.target.value)]}, () =>{
          this.setState({
-           unique_tech: ApiLoader(this.state.selectedCiv.unique_tech),
-           unique_unit: ApiLoader(this.state.selectedCiv.unique_unit),
+           unique_tech: this.A(this.state.selectedCiv.unique_tech),
+           unique_unit: this.A(this.state.selectedCiv.unique_unit),
            team_bonus: this.state.selectedCiv.team_bonus
          });
        });

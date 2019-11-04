@@ -1,28 +1,37 @@
 /**
  * @Date:   2019-10-23T19:30:59+01:00
- * @Last modified time: 2019-10-25T19:39:59+01:00
+ * @Last modified time: 2019-11-04T17:04:40+00:00
  */
 
- import React, {Component} from 'react';
- import * as ReactCSS from 'react-bootstrap';
- import {BrowserRouter, Route, Link, Switch, Redirect} from 'react-router-dom';
- import 'bootstrap/dist/css/bootstrap.min.css';
+import React, {Component} from 'react';
+import * as ReactCSS from 'react-bootstrap';
+import {BrowserRouter, Route, Link, Switch, Redirect} from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import ApiLoader from '../../ApiLoader';
 
- import UnitComponent from './UnitComponent';
+import UnitComponent from './UnitComponent';
+
 
 
  class CompareContainer extends Component{
    constructor(props){
      super(props);
 
+
+
      this.state = {
        message: "",
        style: {color: "red"},
        unitOne: {},
        unitTwo: {},
-       totalResources: 0
+       totalResources: 0,
+       units: []
      };
    }
+
+   A = (v) => {
+     return ApiLoader(v);
+   };
 
    calculate = function(unit, total, identity){//callback function from child cards to pass total cost
 
@@ -44,13 +53,22 @@
      !isNaN(parsed) ? this.setState({message: `${parsed} Total Resources will give you:`, style:{color: "black"}}, () => this.setState({totalResources: parsed})) : this.setState({message: "Input Must be a Number", style: {color: "red"}})
    }
 
+   componentDidMount(){
+      console.log("MAIN");
+      if(!localStorage.getItem("u")){
+        this.setState({units: this.A("unit")}, () => localStorage.setItem("u", JSON.stringify(this.state.units)));
+      }else{
+        this.setState({units: JSON.parse(localStorage.getItem("u"))});
+      }
+   }
+
    render(){
      return(
        <div className="row">
         <div className="col-lg-6 col-sm-12">
           <div className="card mb-4">
             <div className="card-body">
-              <UnitComponent recieveData={this.calculate} cardNo={1}/>
+              <UnitComponent recieveData={this.calculate} resend={this.A} cardNo={1}/>
             </div>
           </div>
         </div>
@@ -58,7 +76,7 @@
         <div className="col-lg-6 col-sm-12 mb-4">
           <div className="card">
             <div className="card-body">
-              <UnitComponent recieveData={this.calculate} cardNo={2}/>
+              <UnitComponent recieveData={this.calculate} resend={this.A} cardNo={2}/>
             </div>
           </div>
         </div>
