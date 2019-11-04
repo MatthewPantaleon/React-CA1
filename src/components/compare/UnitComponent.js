@@ -1,13 +1,12 @@
 /**
  * @Date:   2019-10-24T16:34:54+01:00
- * @Last modified time: 2019-11-04T18:05:46+00:00
+ * @Last modified time: 2019-11-04T18:58:06+00:00
  */
 
 import React, {Component} from 'react';
 import * as ReactCSS from 'react-bootstrap';
 import {BrowserRouter, Route, Link, Switch, Redirect} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import $ from 'jquery';
 
 /*
   Barracks: Champion, Halberdier, Elite eagle Warrior
@@ -82,7 +81,7 @@ import $ from 'jquery';
 
        });
      }else{//if the localstorage hasn't been set
-       this.setState({units: this.props.resend("unit")}, () => {
+       this.setState({units: this.props.resend("unit").units}, () => {
          localStorage.setItem("u", JSON.stringify(this.state.units));
 
          this.setState({
@@ -92,6 +91,7 @@ import $ from 'jquery';
            shipsArray: this.getUnits(this.shipsArray)
          }, () => {
            this.setState({selectedUnit: this.state.archersArray[0]}, () =>{
+
              let costArray = Object.values(this.state.selectedUnit.cost);
              this.props.recieveData(this.state.selectedUnit.name, costArray.reduce((a, b) => a + b), this.props.cardNo);
            })
@@ -118,6 +118,7 @@ import $ from 'jquery';
 
      //if unit type is changed
      if(stv){
+       console.log("UNIT TYPE CHANGE");
 
        this.setState({
          selectedOption: nameString + "Array",

@@ -1,6 +1,6 @@
 /**
  * @Date:   2019-10-23T19:30:59+01:00
- * @Last modified time: 2019-11-04T18:06:06+00:00
+ * @Last modified time: 2019-11-04T18:38:07+00:00
  */
 
 import React, {Component} from 'react';
@@ -25,7 +25,7 @@ import UnitComponent from './UnitComponent';
        unit1: {},
        unit2: {},
        totalResources: 0,
-       units: []
+       units: [],
      };
    }
 
@@ -36,7 +36,7 @@ import UnitComponent from './UnitComponent';
    calculate = function(unit, total, identity){//callback function from child cards to pass total cost
 
      // console.log(arguments);
-     this.setState({["unit" + identity]: {name: unit, total: total}}, () => console.log(this.state.unit1));
+     this.setState({["unit" + identity]: {name: unit, total: total}});
 
    }.bind(this);
 
@@ -49,7 +49,11 @@ import UnitComponent from './UnitComponent';
     }
 
      let parsed = parseInt(e.target.value);
-     !isNaN(parsed) ? this.setState({message: `${parsed} Total Resources will give you:`, style:{color: "black"}}, () => this.setState({totalResources: parsed})) : this.setState({message: "Input Must be a Number", style: {color: "red"}})
+     if(!isNaN(parsed)){
+       this.setState({message: `${parsed} Total Resources will give you:`, style:{color: "black"}}, () => this.setState({totalResources: parsed}));
+     }else{
+       this.setState({message: "Input Must be a Number", style: {color: "red"}});
+     }
    }
 
    componentDidMount(){
@@ -90,8 +94,8 @@ import UnitComponent from './UnitComponent';
                   <input name="resources" className="form-control" onChange={(e) => this.parseinput(e)}/>
                   <small style={this.state.style}>{this.state.message}</small>
                   <hr />
-                  <p><b>({this.state.unit1.total} Cost) {this.state.unit1.name}s:</b> {Math.floor(this.state.totalResources/this.state.unit1.total)}</p>
-                  <p><b>({this.state.unit2.total} Cost) {this.state.unit2.name}s: </b> {Math.floor(this.state.totalResources/this.state.unit2.total)}</p>
+                  <p><b>({this.state.unit1.total} Cost) {this.state.unit1.name}s:</b> {Math.floor(this.state.totalResources/this.state.unit1.total)}.</p>
+                  <p><b>({this.state.unit2.total} Cost) {this.state.unit2.name}s: </b> {Math.floor(this.state.totalResources/this.state.unit2.total)}.</p>
                 </div>
                 </div>
               </div>
