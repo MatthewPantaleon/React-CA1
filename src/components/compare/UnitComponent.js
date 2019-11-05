@@ -1,6 +1,6 @@
 /**
  * @Date:   2019-10-24T16:34:54+01:00
- * @Last modified time: 2019-11-05T13:42:03+00:00
+ * @Last modified time: 2019-11-05T15:33:33+00:00
  */
 
 import React, {Component} from 'react';
@@ -33,6 +33,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
        infantryArray: [],
        cavalryArray: [],
        shipsArray: [],
+       castleArray: [],
        selectedOption: "archersArray",
        unitOptions: [],
        selectedUnit: {name: "Arbalest", cost: {}, attack_bonus: []},
@@ -40,11 +41,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
      };
 
      this.unitSelect = React.createRef();
-     this.structs = ["Archers", "Infantry", "Cavalry", "Ships"];
+     this.structs = ["Archers", "Infantry", "Cavalry", "Ships", "Castle"];
      this.archersArray = ["Arbalest", "Hand Cannoneer", "Heavy Cavalry Archer", "Elite Skirmisher"];
      this.infantryArray = ["Champion", "Halberdier", "Elite Eagle Warrior"];
      this.cavalryArray = ["Hussar", "Paladin", "Heavy Camel"];
      this.shipsArray = ["Fast Fire Ship", "Elite Cannon Galleon", "Galleon"];
+     this.castleArray = ["Elite Huskarl", "Elite Longbowman", "Elite Samurai", "Elite Mangudai", "Elite Longboat", "Elite Cataphract"];
    }
 
    getUnits(arrayOfNames){
@@ -68,7 +70,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
            archersArray: this.getUnits(this.archersArray),
            infantryArray: this.getUnits(this.infantryArray),
            cavalryArray: this.getUnits(this.cavalryArray),
-           shipsArray: this.getUnits(this.shipsArray)
+           shipsArray: this.getUnits(this.shipsArray),
+           castleArray: this.getUnits(this.castleArray)
          }, () => {
            //set default selected unit
            this.setState({selectedUnit: this.state.archersArray[0]}, () => {
@@ -88,7 +91,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
            archersArray: this.getUnits(this.archersArray),
            infantryArray: this.getUnits(this.infantryArray),
            cavalryArray: this.getUnits(this.cavalryArray),
-           shipsArray: this.getUnits(this.shipsArray)
+           shipsArray: this.getUnits(this.shipsArray),
+           castleArray: this.getUnits(this.castleArray)
          }, () => {
            this.setState({selectedUnit: this.state.archersArray[0]}, () =>{//set default selected unit
 
@@ -111,6 +115,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
      let iv = this.infantryArray.includes(e.target.value);
      let cv = this.cavalryArray.includes(e.target.value);
      let sv = this.shipsArray.includes(e.target.value);
+     let uv = this.castleArray.includes(e.target.value);
      let stv = this.structs.includes(e.target.value);
 
      //make first character lowercase of the value passed
@@ -129,7 +134,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
        });
 
 
-     }else if(av || iv || cv || sv){//if individual unit is changed
+     }else if(av || iv || cv || sv || uv){//if individual unit is changed
        console.log("UNIT CHANGE");
        let index = this.state[this.state.selectedOption].findIndex((ele) => ele.name === e.target.value);//find index value from name value
 
