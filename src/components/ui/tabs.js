@@ -1,6 +1,6 @@
 /**
  * @Date:   2019-10-22T15:30:46+01:00
- * @Last modified time: 2019-11-05T10:12:17+00:00
+ * @Last modified time: 2019-11-05T15:58:59+00:00
  */
 
  import React, {Component} from 'react';
@@ -20,7 +20,7 @@
 
 
  class Tab extends Component{
-
+   
    changeClass(e){
      //re assign btn-secondary to all tabs
      for(let i = 0; i < $("#tabRow").children.length; i++){

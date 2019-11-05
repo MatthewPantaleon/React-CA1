@@ -1,6 +1,6 @@
 /**
  * @Date:   2019-10-22T18:41:31+01:00
- * @Last modified time: 2019-11-05T09:47:53+00:00
+ * @Last modified time: 2019-11-05T16:04:14+00:00
  */
 
 import React, {Component} from 'react';
@@ -66,9 +66,11 @@ ApiLoader("tech");
 
      return(
       <>
+      <div className="card">
+      <div className="card-body">
 
       <div className="row">
-        <div className="col-lg-6 col-md-9 col-sm-12">
+        <div className="col-lg-8 col-md-10 col-sm-12">
           <select className="form-control" onChange={(e) => this.changeValue(e)}>
           {this.state.data.civilizations.map((e, i) => <option value={i} key={e.id}>{e.name}</option>)}
           </select>
@@ -114,6 +116,10 @@ ApiLoader("tech");
       <ul>
       <li>{this.state.team_bonus}</li>
       </ul>
+
+      </div>
+      </div>
+
       </>
      );
    }
