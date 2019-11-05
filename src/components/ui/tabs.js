@@ -1,6 +1,6 @@
 /**
  * @Date:   2019-10-22T15:30:46+01:00
- * @Last modified time: 2019-11-04T19:22:29+00:00
+ * @Last modified time: 2019-11-05T10:12:17+00:00
  */
 
  import React, {Component} from 'react';
@@ -21,24 +21,21 @@
 
  class Tab extends Component{
 
-   constructor(props){
-     super(props);
-   }
-
    changeClass(e){
-     //re assign btn-primary to all tabs
+     //re assign btn-secondary to all tabs
      for(let i = 0; i < $("#tabRow").children.length; i++){
-       $("#tabRow").children()[i].className = tabStyle.bootClasses.tabClassReady;
+       $("#tabRow").children()[i].className = tabStyle.bootClasses.tabClassSelected;
      }
 
-     //get selected tab and change to secondary button
-     e.target.className = tabStyle.bootClasses.tabClassSelected;
+     //get selected tab and change to ready button
+     e.target.className = tabStyle.bootClasses.tabClassReady;
 
    }
 
    componentDidMount(){
      //make sure the first tab is selected
-     $("#tabRow").children()[0].className = tabStyle.bootClasses.tabClassSelected;
+
+     $("#tabRow").children()[0].className = tabStyle.bootClasses.tabClassReady;
    }
 
    render(){
@@ -54,7 +51,7 @@
             <div className="card-header">
               <div className="row" id="tabRow">
                 {/* Loops through the props array and creates a new button for each route */}
-                {this.props.list.map((e, i) => <Link onClick={(w) => this.changeClass(w)} id={"_"+e.name} className={tabStyle.bootClasses.tabClassReady} key={e.name} to={e.path}>{e.name}</Link>)}
+                {this.props.list.map((e, i) => <Link onClick={(w) => this.changeClass(w)} id={"_"+e.name} className={tabStyle.bootClasses.tabClassSelected} key={e.name} to={e.path}>{e.name}</Link>)}
               </div>
             </div>
 

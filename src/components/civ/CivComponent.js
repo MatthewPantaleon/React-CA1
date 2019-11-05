@@ -1,6 +1,6 @@
 /**
  * @Date:   2019-10-22T18:41:31+01:00
- * @Last modified time: 2019-11-04T19:24:49+00:00
+ * @Last modified time: 2019-11-05T09:47:53+00:00
  */
 
 import React, {Component} from 'react';
@@ -23,7 +23,7 @@ ApiLoader("tech");
      };
    }
 
-   //fucntion expression for more control when and how to call the API
+   //function expression for more control when and how to call the API
    A = (v) => {
      return ApiLoader(v);
    };
@@ -37,7 +37,9 @@ ApiLoader("tech");
             unique_tech: this.A(this.state.selectedCiv.unique_tech),
             unique_unit: this.A(this.state.selectedCiv.unique_unit),
             team_bonus: this.state.selectedCiv.team_bonus
-          }, () => {localStorage.setItem("c", JSON.stringify(this.state))});
+          }, () => {
+            localStorage.setItem("c", JSON.stringify(this.state))
+          });
         }
       ));
     }else{

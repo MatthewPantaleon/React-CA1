@@ -1,6 +1,6 @@
 /**
  * @Date:   2019-10-24T16:34:54+01:00
- * @Last modified time: 2019-11-04T19:18:11+00:00
+ * @Last modified time: 2019-11-05T10:17:12+00:00
  */
 
 import React, {Component} from 'react';
@@ -39,6 +39,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
        totalCost: 0
      };
 
+     this.unitSelect = React.createRef();
      this.structs = ["Archers", "Infantry", "Cavalry", "Ships"];
      this.archersArray = ["Arbalest", "Hand Cannoneer", "Heavy Cavalry Archer", "Elite Skirmisher"];
      this.infantryArray = ["Champion", "Halberdier", "Elite Eagle Warrior"];
@@ -83,7 +84,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
        this.setState({units: this.props.resend("unit").units}, () => {
          localStorage.setItem("u", JSON.stringify(this.state.units));
 
-         this.setState({
+         this.setState({//get the unit objects from name arrays
            archersArray: this.getUnits(this.archersArray),
            infantryArray: this.getUnits(this.infantryArray),
            cavalryArray: this.getUnits(this.cavalryArray),
@@ -102,7 +103,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
    }
 
-   //when type of units changes get the first unit from the list
+   //when type of units or individual changes get the first unit from the list or the selected unit
    changeOptions(e){
 
      //boolean properties
@@ -112,7 +113,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
      let sv = this.shipsArray.includes(e.target.value);
      let stv = this.structs.includes(e.target.value);
 
-     //make first character lowercase
+     //make first character lowercase of the value passed
      let nameString = e.target.value.charAt(0).toLowerCase() + e.target.value.substring(1);
 
      //if unit type is changed
@@ -152,7 +153,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
         </select>
 
         {/* CHange individual Unit */}
-        <select className="form-control mb-3" onChange={(e) => this.changeOptions(e)} id="unitSelect">
+        <select className="form-control mb-3" onChange={(e) => this.changeOptions(e)} ref={this.unitSelect}>
         {this.state[this.state.selectedOption].map((e, i) => <option value={e.name} key={i}>{e.name}</option>)}
         </select>
         <hr />
@@ -163,10 +164,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
           <img className="img-fluid mb-4" src={require(`../../images/units/${this.state.selectedUnit.name}.jpg`)} alt={this.state.selectedUnit.name}/>
         </div>
 
-        <h5>Description</h5>
+        <h5>Description:</h5>
         <p>{this.state.selectedUnit.description}</p>
 
         <h5>Stats:</h5>
+
+        {/* Display Primary information */}
         <ul>
         <Details name={"Hit Points"} value={this.state.selectedUnit.hit_points}/>
         <Details name={"Attack"} value={this.state.selectedUnit.attack}/>
@@ -176,6 +179,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
         <hr />
 
+        {/* Display Secondary Information */}
         <ul>
         <Details name={"Age"} value={this.state.selectedUnit.age}/>
         <Details name={"Build Time"} value={this.state.selectedUnit.build_time}/>
@@ -203,9 +207,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 //display list components with various names and values
 class Details extends Component{
-  constructor(props){
-    super(props);
-  }
 
   render(){
     return(

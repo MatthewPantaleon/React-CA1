@@ -1,6 +1,6 @@
 /**
  * @Date:   2019-10-23T19:30:59+01:00
- * @Last modified time: 2019-11-04T19:21:08+00:00
+ * @Last modified time: 2019-11-05T10:07:22+00:00
  */
 
 import React, {Component} from 'react';
@@ -89,7 +89,7 @@ import UnitComponent from './UnitComponent';
                 <div className="card-body">
                   <h5 className="text-center">Unit Calculator</h5>
                   <label>Total Resources</label>
-                  <input name="resources" className="form-control" onChange={(e) => this.parseinput(e)}/>
+                  <input type="text" name="resources" className="form-control" autoComplete="off" formNoValidate onChange={(e) => this.parseinput(e)}/>
                   <small style={this.state.style}>{this.state.message}</small>
                   <hr />
                   {/*Display total units that resources can buy*/}
