@@ -1,6 +1,6 @@
 /**
  * @Date:   2019-10-24T16:34:54+01:00
- * @Last modified time: 2019-11-05T10:17:12+00:00
+ * @Last modified time: 2019-11-05T13:42:03+00:00
  */
 
 import React, {Component} from 'react';
@@ -148,11 +148,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
        <>
 
         {/* Change unit type */}
+        <label><b>Unit Type:</b></label>
         <select className="form-control mb-3" onChange={(e) => this.changeOptions(e)}>
         {this.structs.map((e, i) => <option key={i} value={e}>{e}</option>)}
         </select>
 
         {/* CHange individual Unit */}
+        <label><b>Unit:</b></label>
         <select className="form-control mb-3" onChange={(e) => this.changeOptions(e)} ref={this.unitSelect}>
         {this.state[this.state.selectedOption].map((e, i) => <option value={e.name} key={i}>{e.name}</option>)}
         </select>

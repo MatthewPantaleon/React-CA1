@@ -39,5 +39,22 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-app.js"></script>
+
+    <script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyCQZcemXh6cJJAvbZth4vIQPfND3IOjLWo",
+    authDomain: "age-of-empires-2-comparator.firebaseapp.com",
+    databaseURL: "https://age-of-empires-2-comparator.firebaseio.com",
+    projectId: "age-of-empires-2-comparator",
+    storageBucket: "age-of-empires-2-comparator.appspot.com",
+    messagingSenderId: "726605375195",
+    appId: "1:726605375195:web:24ea96d54d2153132e4efe",
+    origin: true
+  };
+  // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+  </script>
   </body>
 </html>

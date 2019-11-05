@@ -1,6 +1,6 @@
 /**
  * @Date:   2019-10-22T11:26:33+01:00
- * @Last modified time: 2019-11-04T19:11:48+00:00
+ * @Last modified time: 2019-11-05T12:16:01+00:00
  */
 
 import $ from 'jquery';
@@ -55,8 +55,11 @@ import $ from 'jquery';
      return JSON.parse($.ajax({
        type: "GET",
        url: `https://age-of-empires-2-api.herokuapp.com/api/v1/${apiEnd}`,
-       async: false
+       async: false,
+       dataType: "json",
+       async: false,
      }).responseText);
+
 
    }else if(Array.isArray(type) && noId && !stringType){//if an array of endpoints are given
 
@@ -65,7 +68,9 @@ import $ from 'jquery';
          type: "GET",
          url: type[i],
          async: false,
-         dataType: "JSON",
+         crossDomain: true,
+         dataType: "json",
+         async: false,
          success(data){
            results.push(data);
          },
