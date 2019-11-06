@@ -1,6 +1,6 @@
 /**
  * @Date:   2019-11-05T15:55:11+00:00
- * @Last modified time: 2019-11-05T16:45:08+00:00
+ * @Last modified time: 2019-11-06T12:27:04+00:00
  */
 
 
@@ -17,11 +17,11 @@
        <>
 
        <div className="row">
-        <div className="col-lg-6 col-md-6 col-sm-12 mb-4">
+        <div className="col-lg-6 col-md-12 col-sm-12 mb-4">
           <CivComponent />
         </div>
 
-        <div className="col-lg-6 col-md-6 col-sm-12 mb-4">
+        <div className="col-lg-6 col-md-12 col-sm-12 mb-4">
           <CivComponent />
         </div>
 

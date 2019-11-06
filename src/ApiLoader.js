@@ -1,6 +1,6 @@
 /**
  * @Date:   2019-10-22T11:26:33+01:00
- * @Last modified time: 2019-11-05T12:16:01+00:00
+ * @Last modified time: 2019-11-06T12:30:26+00:00
  */
 
 import $ from 'jquery';
@@ -55,9 +55,8 @@ import $ from 'jquery';
      return JSON.parse($.ajax({
        type: "GET",
        url: `https://age-of-empires-2-api.herokuapp.com/api/v1/${apiEnd}`,
-       async: false,
        dataType: "json",
-       async: false,
+       async:false
      }).responseText);
 
 
@@ -67,7 +66,6 @@ import $ from 'jquery';
        $.ajax({
          type: "GET",
          url: type[i],
-         async: false,
          crossDomain: true,
          dataType: "json",
          async: false,

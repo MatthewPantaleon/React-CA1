@@ -1,6 +1,6 @@
 /**
  * @Date:   2019-10-15T15:11:22+01:00
- * @Last modified time: 2019-11-05T15:57:35+00:00
+ * @Last modified time: 2019-11-06T12:29:39+00:00
  */
 
 
@@ -8,7 +8,6 @@
 import React, {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import CivComponent from './components/civ/CivComponent';
 import CivContainer from './components/civ/CivContainer';
 import CompareContainer from './components/compare/CompareContainer';
 import Tab from './components/ui/tabs';
