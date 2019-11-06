@@ -1,6 +1,6 @@
 /**
  * @Date:   2019-10-15T15:11:22+01:00
- * @Last modified time: 2019-11-06T12:29:39+00:00
+ * @Last modified time: 2019-11-06T16:07:22+00:00
  */
 
 
@@ -19,7 +19,7 @@ class App extends Component{
     //array of routes and paths
     let tabs = [
         {comp: CivContainer, path: "/civilizations", name:"Civilizations"},
-        {comp: CompareContainer, path: "/compare", name: "Compare"},
+        {comp: CompareContainer, path: "/compare", name: "Units"},
     ]
 
     return (

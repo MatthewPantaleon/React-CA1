@@ -1,12 +1,13 @@
 /**
  * @Date:   2019-10-22T15:30:46+01:00
- * @Last modified time: 2019-11-05T15:58:59+00:00
+ * @Last modified time: 2019-11-06T16:25:35+00:00
  */
 
  import React, {Component} from 'react';
  import 'bootstrap/dist/css/bootstrap.min.css';
  import {BrowserRouter, Route, Link, Redirect} from 'react-router-dom';
  import $ from 'jquery';
+ import PropTypes from 'prop-types';
 
 //objects used to style t he tab buttons
  const tabStyle = {
@@ -18,9 +19,8 @@
 
 
 
+class Tab extends Component{
 
- class Tab extends Component{
-   
    changeClass(e){
      //re assign btn-secondary to all tabs
      for(let i = 0; i < $("#tabRow").children.length; i++){
@@ -69,5 +69,16 @@
      );
    }
  }
+
+ //check propTypes from App.js to display routes, must be an array of pbjects
+ Tab.propTypes = {
+   list: PropTypes.arrayOf(
+     PropTypes.shape({
+       comp: PropTypes.elementType.isRequired, //component to render
+       path: PropTypes.string.isRequired, //reuired url path as a string
+       name: PropTypes.string //optional name of tab
+     })
+   ).isRequired,
+ };
 
 export default Tab;
