@@ -1,6 +1,6 @@
 /**
  * @Date:   2019-10-22T18:41:31+01:00
- * @Last modified time: 2019-11-05T16:04:14+00:00
+ * @Last modified time: 2019-11-07T15:16:20+00:00
  */
 
 import React, {Component} from 'react';
@@ -108,7 +108,7 @@ ApiLoader("tech");
 
       <h5>Unique Unit:</h5>
       <ul>
-      {this.state.unique_unit.map((e, i) => <li className="mb-2" key={i}><img className="mr-2" src={require(`../../images/civ/unique_units/${e.name}.jpg`)} alt={e.name}/><b>{e.name}:</b> {e.description}</li>)}
+      {this.state.unique_unit.map((e, i) => <li className="mb-2" key={i}><img className="mr-2" src={require(`./../../images/civ/unique_units/${e.name}.jpg`)} alt={e.name}/><b>{e.name}:</b> {e.description}</li>)}
       </ul>
 
       <hr />
