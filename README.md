@@ -11,6 +11,7 @@ Then run ``` npm install ```
 Make sure to have a browser extension that will enable *Cross-Origin-Resource-Sharing*, otherwise the application won't work.
 
 Then run either: ``` npm start ``` or ``` npm run start ```
+This will run the application on ```localhost:3000/```
 
 You can access the live application via [here](https://age-of-empires-2-comparator.web.app/). You would also need a *CORS* extension for this as well.
 
